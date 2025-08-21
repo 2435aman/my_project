@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Learning Platform Dashboard</title>
+     <!-- Tailwind CSS CDN -->
+      <script src="https://cdn.tailwindcss.com"></script>
+     <!-- Lucide Icons CDN -->
+      <script src="https://unpkg.com/lucide@latest"></script>
+      <script src="node.js"></script>
+      <link rel="stylesheet" href="stack.css">
+      <style>
+         /* This style is for the canvas to make it responsive */
+         #weekly-progress-chart {
+             width: 100%;
+             height: 100%;
+         }
+         /* Hide scrollbars for the main content area */
+         .no-scrollbar::-webkit-scrollbar {
+             display: none;
+         }
+         .no-scrollbar {
+             -ms-overflow-style: none;  /* IE and Edge */
+             scrollbar-width: none;  /* Firefox */
+         }
+
+      </style>
+</head>
+<body class="flex bg-gray-50 min-h-screen font-sans text-gray-800">
+    
+
+     <!-- Mobile sidebar toggle button -->
+     <button id="mobile-menu-button" class="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-full bg-indigo-600 text-white shadow-lg transition-transform transform hover:scale-105">
+         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+     </button>
+
+     <!-- Sidebar -->
+     <aside id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out w-64 bg-white p-6 shadow-xl z-40 lg:flex lg:flex-col lg:rounded-r-3xl">
+        <div class="flex-grow flex flex-col">
+            <div class="flex items-center space-x-2 mb-8">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open text-indigo-600"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                 <h1 class="text-2xl font-bold text-indigo-600">MyLearning</h1>
+            </div>
+            <nav class="space-y-4 flex-grow">
+                <a href="project.html" class="flex items-center space-x-3 p-3 rounded-lg text-white bg-indigo-600 font-semibold shadow-md transition-all hover:bg-indigo-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                     <span>Home</span>
+                 </a>
+                 <a href="my_course.html" class="flex items-center space-x-3 p-3 rounded-lg text-gray-600 hover:text-indigo-600 hover:bg-gray-100 transition-colors">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                     <span>Buy Courses</span>
+                </a>
+                 <a href="#" class="flex items-center space-x-3 p-3 rounded-lg text-gray-600 hover:text-indigo-600 hover:bg-gray-100 transition-colors">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                     <span>Schedule</span>
+                 </a>
+                 <a href="setting.html" class="flex items-center space-x-3 p-3 rounded-lg text-gray-600 hover:text-indigo-600 hover:bg-gray-100 transition-colors">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                     <span>Settings</span>
+                 </a>
+             </nav>
+         </div> 
+     </aside> 
+
+     <!-- Main content -->
+      <main class="flex-1 p-6 lg:p-12 overflow-y-auto no-scrollbar">
+        <!-- Top bar with search and profile -->
+         
+          <header class="flex flex-col sm:flex-row justify-between items-center mb-8 space-y-4 sm:space-y-0">
+             <h2 class="text-3xl font-extrabold text-gray-900">Welcome back!</h2>
+             <div class="flex items-center space-x-4">
+                 <div class="relative">
+                     <input type="text" placeholder="Search anything..." class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                 </div>
+                 <button class="relative p-2 rounded-full bg-white text-gray-600 hover:bg-gray-100 transition-colors">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                     <span class="absolute top-0 right-0 block h-3 w-3 bg-red-500 rounded-full ring-2 ring-white"></span>
+                 </button>
+                 <button class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-semibold" onclick="openProfile()">AK</button>
+
+                    <!-- Overlay & Sidebar -->
+                        <div class="overlay" id="overlay" onclick="closeProfile()"></div>
+                        <aside id="profileSidebar" class="profile-sidebar" aria-hidden="true">
+                            <span class="close-btn" onclick="closeProfile()" title="Close">&times;</span>
+
+                            <div class="profile-content">
+                                <img id="avatar" class="avatar" src="https://via.placeholder.com/120x120.png?text=User" alt="User Avatar" />
+                                <h3 id="displayName" class="name">Guest User</h3>
+                                <p id="displayEmail" class="email">Not logged in</p>
+
+                                <div class="section">
+                                    <h4>Account</h4>
+                                    <button class="btn-full" onclick="googleLogin()">Login with Google</button>
+                                    <button class="btn-ghost" onclick="toggleEmailBox()">Login with Email</button>
+
+                                    <!-- Email Login Box -->
+                                    <div id="emailBox" class="email-box section">
+                                        <input id="emailInput" class="input" type="email" placeholder="Email" />
+                                        <input id="passwordInput" class="input" type="password" placeholder="Password" />
+                                        <button class="btn-full" onclick="emailLogin()">Login</button>
+                                        <button class="btn-ghost" onclick="emailSignup()">Create Account</button>
+                                        <div class="hint">Tip: If you don’t have an account, use <em>Create Account</em>.</div>
+                                    </div>
+
+                                    <button class="btn-ghost" onclick="logout()">Logout</button>
+                                </div>
+
+                                <div class="section contact">
+                                    <h4>Contact</h4>
+                                    <p>📧 support@learningplatform.com</p>
+                                    <p>📞 +91 9876543210</p>
+                                    <p>🏢 Lucknow, India</p>
+                                </div>
+
+                                <div class="section about">
+                                    <h4>About</h4>
+                                    <p>Use this profile panel to manage your account, sign in/out, and reach support.</p>
+                                </div>
+                            </div>
+                        </aside>
+                 
+             </div>
+         </header>
+
+         <!-- My Courses Section -->
+          <section class="mb-12">
+             <h3 class="text-2xl font-bold text-gray-900 mb-6">My Courses</h3>
+             <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                 <div class="bg-white rounded-xl shadow-lg overflow transform hover:scale-105 transition-transform duration-300">
+                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnUxGOIlmqytBmHSpLQhq0q3mwqgpECESaWLYxJZg13XBUoyc0Norw6H_0XTuJ88pQPcQ&usqp=CAU" alt="Introduction to Web Development" class="w-full h-40 object-cover">
+                     <div class="p-5">
+                         <h4 class="font-bold text-lg mb-2">Introduction to Web Development</h4>
+                         <div class="w-full bg-gray-200 rounded-full h-2.5">
+                             <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 75%;"></div>
+                         </div>
+                         <p class="text-sm text-gray-500 mt-2">75% Complete</p>
+                     </div>
+                 </div>
+                 <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                     <img src="https://www.thinknexttraining.com/images/data-science-course-in-chandigarh-mob.jpg" alt="Data Science Fundamentals" class="w-full h-40 object-cover">
+                     <div class="p-5">
+                         <h4 class="font-bold text-lg mb-2">Data Science Fundamentals</h4>
+                         <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 50%;"></div>
+                         </div>
+                         <p class="text-sm text-gray-500 mt-2">50% Complete</p>
+                     </div>
+                 </div>
+                 <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHKVGbBxdkjRkYKeEfSvn_W8rSDauooH6qCg&s" alt="Graphic Design Principles" class="w-full h-40 object-cover">
+                     <div class="p-5">
+                         <h4 class="font-bold text-lg mb-2">Graphic Design Principles</h4>
+                         <div class="w-full bg-gray-200 rounded-full h-2.5">
+                             <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 90%;"></div>
+                         </div>
+                         <p class="text-sm text-gray-500 mt-2">90% Complete</p>
+                     </div>
+                    </div>
+                 <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                     <img src="https://www.appstudio.ca/blog/wp-content/uploads/2021/09/Cost-of-Game-Development.jpeg" alt="Mobile App Development with React Native" class="w-full h-40 object-cover">
+                     <div class="p-5">
+                         <h4 class="font-bold text-lg mb-2">Mobile Game Development with React Native</h4>
+                         <div class="w-full bg-gray-200 rounded-full h-2.5">
+                             <div class="bg-indigo-600 h-2.5 rounded-full" style="width: 30%;"></div>
+                         </div>
+                         <p class="text-sm text-gray-500 mt-2">30% Complete</p>
+                     </div>
+                 </div>
+             </div>
+         </section>
+
+         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+             <!-- Progress Chart Section -->
+              <section class="bg-white rounded-xl shadow-lg p-6">
+                 <h3 class="text-2xl font-bold text-gray-900 mb-6">Weekly Progress</h3>
+                 <div class="h-80">
+                    <canvas id="weekly-progress-chart"></canvas>
+                 </div>
+             </section>
+
+             <!-- Upcoming Deadlines Section -->
+            <section class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Upcoming Deadlines</h3>
+                 <ul class="space-y-4">
+                    <li class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar text-indigo-600 flex-shrink-0 mt-1"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                         <div>
+                             <p class="font-medium text-gray-900">Complete Chapter 5 quiz</p>
+                             <p class="text-sm text-gray-500">                                 <span class="font-bold">Web Development:</span> Due on August 20, 2025
+                             </p>
+                         </div>
+                     </li>
+                     <li class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar text-indigo-600 flex-shrink-0 mt-1"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                         <div>
+                             <p class="font-medium text-gray-900">Submit Data Science project proposal</p>
+                             <p class="text-sm text-gray-500">
+                                <span class="font-bold">Data Science:</span> Due on August 25, 2025
+                             </p>
+                         </div>
+                     </li>
+                    <li class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar text-indigo-600 flex-shrink-0 mt-1"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+                         <div>
+                             <p class="font-medium text-gray-900">Start final design project</p>
+                             <p class="text-sm text-gray-500">
+                                 <span class="font-bold">Graphic Design:</span> Due on September 1, 2025
+                             </p>
+                         </div>
+                     </li>
+                 </ul>
+             </section>
+         </div>
+     </main>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script>
+          // Sidebar toggle logic for mobile -->
+         const mobileMenuButton = document.getElementById('mobile-menu-button');
+         const sidebar = document.getElementById('sidebar');
+
+         mobileMenuButton.addEventListener('click', () => {
+             sidebar.classList.toggle('-translate-x-full');
+         });
+
+         // Chart drawing logic for the canvas
+         const chartData = [25, 40, 65, 50, 75, 90, 80];
+         const chartLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+         const canvas = document.getElementById('weekly-progress-chart');
+         const ctx = canvas.getContext('2d');
+
+        function drawChart() {
+             // Get the parent container's dimensions
+             const parent = canvas.parentElement;
+             const width = parent.clientWidth;
+             const height = parent.clientHeight;          
+             // Set canvas dimensions to match the parent
+             canvas.width = width;
+             canvas.height = height;
+
+             // Clear the canvas
+             ctx.clearRect(0, 0, width, height);
+
+             // Chart properties
+             const barCount = chartData.length;
+             const barWidth = width / (barCount * 2);
+             const barSpacing = width / (barCount * 2);
+             const maxVal = Math.max(...chartData);
+             const chartHeight = height - 50; // Leave space for labels
+             const yAxisMargin = 30; // Leave space for Y-axis labels
+
+             // Draw Y-axis line
+             ctx.beginPath();
+             ctx.strokeStyle = '#E5E7EB';
+             ctx.moveTo(yAxisMargin, 0);
+             ctx.lineTo(yAxisMargin, chartHeight);
+             ctx.stroke();
+
+            // Draw bars
+            chartData.forEach((value, index) => {
+                const barHeight = (value / 100) * chartHeight;
+                const x = yAxisMargin + (index * (barWidth + barSpacing));
+                const y = chartHeight - barHeight;
+
+                ctx.fillStyle = '#4F46E5';
+                ctx.fillRect(x, y, barWidth, barHeight);
+
+                // Draw X-axis labels
+                ctx.fillStyle = '#6B7280';
+                ctx.font = '12px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(chartLabels[index], x + barWidth / 2, height - 10);
+            });
+        }
+
+        // Initial draw and redraw on window resize
+        window.addEventListener('load', drawChart);
+        window.addEventListener('resize', drawChart);
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Courses - Learning Platform</title>
+  <link rel="stylesheet" href="stack.css">
+  <script src="node.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fafb;
+      color: #111827;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+    .courses-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .course-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+    }
+    .course-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+    .course-card h3 {
+      margin-bottom: 6px;
+      font-size: 20px;
+    }
+    .course-card p {
+      font-size: 14px;
+      color: #4b5563;
+      margin-bottom: 8px;
+    }
+    .price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #10b981;
+      margin: 6px 0;
+    }
+    .progress {
+      background: #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 8px;
+      margin: 10px 0;
+    }
+    .progress-bar {
+      height: 8px;
+      background: #3b82f6;
+      width: 0%;
+    }
+    button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+    .search-bar {
+      text-align: center;
+      float: right;
+      display: flex;
+      background:#f9fafb;
+      border: none;
+      width: 30%;
+    }
+.search-bar input {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 26px;
+  font-size: 16px;
+}
+/* Notification Container (top-right corner) */
+#notificationContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  z-index: 2000;
+}
+
+/* Each Notification (toast style) */
+.notification {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: slideIn 0.4s ease-in-out;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.notification .close-btn {
+  margin-left: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Animations */
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+.menu-btn {
+      font-size: 22px;
+      cursor: pointer;
+      background: #4CAF50;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 26px;
+      margin: 10px;
+      display: inline-block;
+    }
+
+    /* Side Menu */
+    .side-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+      z-index: 1200;
+    }
+
+    .side-menu a {
+      padding: 12px 24px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #f1f1f1;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .side-menu a:hover {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .side-menu .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 32px;
+      cursor: pointer;
+      color: white;
+    }
+
+  </style>
+</head>
+<body><h1>📚 My Courses</h1>
+  <span class="menu-btn" onclick="openMenu()">☰</span>
+
+  <!-- Side Menu -->
+  <div id="sideMenu" class="side-menu">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">×</a>
+    <a href="project.html">🏠 Home</a>
+    <a href="#">📚 Courses</a>
+    <a href="menu.html">📝 Assignments</a>
+    <a href="#">🎓 Certificates</a>
+    <a href="setting.html">⚙️ Settings</a>
+  </div>
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search for a course..." onkeyup="filterCourses()">
+  </div>
+  <button class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-semibold" onclick="openProfile()">AK</button>
+
+                    <!-- Overlay & Sidebar -->
+      <div class="overlay" id="overlay" onclick="closeProfile()"></div>
+          <aside id="profileSidebar" class="profile-sidebar" aria-hidden="true">
+              <span class="close-btn" onclick="closeProfile()" title="Close">&times;</span>
+
+              <div class="profile-content">
+              <img id="avatar" class="avatar" src="https://via.placeholder.com/120x120.png?text=User" alt="User Avatar" />
+              <h3 id="displayName" class="name">Guest User</h3>
+              <p id="displayEmail" class="email">Not logged in</p>
+
+              <div class="section">
+                  <h4>Account</h4>
+                  <button class="btn-full" onclick="googleLogin()">Login with Google</button>
+                  <button class="btn-ghost" onclick="toggleEmailBox()">Login with Email</button>
+
+                <!-- Email Login Box -->
+                <div id="emailBox" class="email-box section">
+                  <input id="emailInput" class="input" type="email" placeholder="Email" />
+                  <input id="passwordInput" class="input" type="password" placeholder="Password" />
+                  <button class="btn-full" onclick="emailLogin()">Login</button>
+                  <button class="btn-ghost" onclick="emailSignup()">Create Account</button>
+                  <div class="hint">Tip: If you don’t have an account, use <em>Create Account</em>.</div>
+                </div>
+
+                                    <button class="btn-ghost" onclick="logout()">Logout</button>
+                                </div>
+
+                                <div class="section contact">
+                                    <h4>Contact</h4>
+                                    <p>📧 support@learningplatform.com</p>
+                                    <p>📞 +91 9876543210</p>
+                                    <p>🏢 Lucknow, India</p>
+                                </div>
+
+                                <div class="section about">
+                                    <h4>About</h4>
+                                    <p>Use this profile panel to manage your account, sign in/out, and reach support.</p>
+                                </div>
+                            </div>
+                        </aside>
+
+  <div class="courses-container">
+    <div class="course-card">
+      <img src="https://www.thinknexttraining.com/images/data-science-course-in-chandigarh-mob.jpg" alt="Data Science">
+      <h3>Data Science Basics</h3>
+      <p>Learn the fundamentals of data analysis, visualization, and statistics.</p>
+      <div class="price">₹4999</div>
+      <div class="progress"><div class="progress-bar" id="progress1"></div></div>
+      <button onclick="alert('Continue Data Science Course')">Buy Now</button>
+    </div>
+
+    <div class="course-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGsHwL4DAlSojxA7QoCG8t0vi3L9BwRZUjKw&s" alt="Python Programming">
+      <h3>Python Programming</h3>
+      <p>Master Python programming with projects and real-world examples.</p>
+      <div class="price">₹3999</div>
+      <div class="progress"><div class="progress-bar" id="progress2"></div></div>
+      <button onclick="alert('Continue Python Programming Course')">Buy Now</button>
+    </div>
+
+    <div class="course-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBa8fpTVZSBEPwCLkHD5MRUUhFfQ2rl-hNZeo4_co3Jdn4KFWx1Y0Sxgj96VpcKh1tNc0&usqp=CAU" alt="Machine Learning">
+      <h3>Machine Learning</h3>
+      <p>Understand supervised, unsupervised learning and build ML models.</p>
+      <div class="price">₹5999</div>
+      <div class="progress"><div class="progress-bar" id="progress3"></div></div>
+      <button onclick="alert('Continue Machine Learning Course')">Buy Now</button>
+    </div>
+
+    <div class="course-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHKVGbBxdkjRkYKeEfSvn_W8rSDauooH6qCg&s" alt="Graphic Design">
+      <h3>Graphic Design</h3>
+      <div class="course-desc">Master Photoshop, Illustrator, and creative design principles.</div>
+      <div class="price">₹2999</div>
+      <div class="progress-bar"><div class="progress" style="width: 40%;"></div></div>
+      <button class="buy-btn" onclick="buyCourse('Graphic Design', 2999)">Buy Now</button>
+    </div>
+
+    <div class="course-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnUxGOIlmqytBmHSpLQhq0q3mwqgpECESaWLYxJZg13XBUoyc0Norw6H_0XTuJ88pQPcQ&usqp=CAU" alt="Web Development">
+      <h3>Web Development</h3>
+      <div class="course-desc">Full-stack development with HTML, CSS, JS, and modern frameworks.</div>
+      <div class="price">₹6999</div>
+      <div class="progress-bar"><div class="progress" style="width: 55%;"></div></div>
+      <button class="buy-btn" onclick="buyCourse('Web Development', 6999)">Buy Now</button>
+    </div>
+    
+    <div class="course-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSOLBK-MJU8RTgZgMPyjpQY0nfIBRaGJzcshhenL4Yo3FxycC_-4YAF8Gu32rSP9odCDU&usqp=CAU" alt="Cyber Security">
+      <h3>Cyber Security</h3>
+      <div class="course-desc">Learn ethical hacking, penetration testing, and network defense.</div>
+      <div class="price">₹5999</div>
+      <div class="progress-bar"><div class="progress" style="width: 20%;"></div></div>
+      <button class="buy-btn" onclick="buyCourse('Cyber Security', 5999)">Buy Now</button>
+    </div>
+
+    <div class="course-card">
+      <img src="https://www.appstudio.ca/blog/wp-content/uploads/2021/09/Cost-of-Game-Development.jpeg" alt="Game Development">
+      <h3>Game Development</h3>
+      <div class="course-desc">Create 2D/3D games with Unity, Unreal Engine, and C# scripting.</div>
+      <div class="price">₹7999</div>
+      <div class="progress-bar"><div class="progress" style="width: 30%;"></div></div>
+      <button class="buy-btn" onclick="buyCourse('Game Development', 7999)">Buy Now</button>
+    </div>
+
+    <div class="course-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTISmcs0FKnhxrcLE9twSJX6qMTpozI3a_IPeEC7EdHfPVqSKluKESmXLrVagKGVIrYiH0&usqp=CAU" alt="Ethical Hacking">
+      <h3>Ethical Hacking</h3>
+      <div class="course-desc">Hands-on training in penetration testing, Kali Linux, and security tools.</div>
+      <div class="price">₹6499</div>
+      <div class="progress-bar"><div class="progress" style="width: 25%;"></div></div>
+      <button class="buy-btn" onclick="buyCourse('Ethical Hacking', 6499)">Buy Now</button>
+    </div>
+  </div>
+  <div id="notificationContainer"></div>
+<!-- Example Trigger Buttons -->
+        <button onclick="showNotification('🎉 Welcome to the Learning Platform!')">Show Welcome</button>
+        <button onclick="showNotification('🔥 New Course: Web Development at 40% Off!')">Show Offer</button>
+        <button onclick="showNotification('⚡ Limited seats left for Cyber Security course!')">Show Alert</button>
+
+  <script>
+    // Example dynamic course progress
+    document.getElementById('progress1').style.width = '70%';
+    document.getElementById('progress2').style.width = '45%';
+    document.getElementById('progress3').style.width = '20%';
+  </script>
+  <!-- Razorpay JS -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<button onclick="buyCourse('Data Science Basics', 4999)">Buy Now</button>
+
+<script>
+  function buyCourse(courseName, amount) {
+    var options = {
+      "key": "rzp_test_xxxxxxxx", // Replace with your Razorpay key
+      "amount": amount * 100,     // Amount in paise (4999 = ₹4999 * 100)
+      "currency": "INR",
+      "name": "Learning Platform",
+      "description": courseName,
+      "handler": function (response){
+          alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
+      }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+  }
+</script>
+<!-- Load PayPal JS SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD"></script>
+
+<div id="paypal-button-container"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+<script>
+  paypal.Buttons({
+    createOrder: function(data, actions) {
+      return actions.order.create({
+        purchase_units: [{
+          amount: { value: '49.99' } // Course price in USD
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      return actions.order.capture().then(function(details) {
+        alert('Payment completed by ' + details.payer.name.given_name);
+      });
+    }
+  }).render('#paypal-button-container');
+</script>
+<script>
+  function filterCourses() {
+    var input = document.getElementById('searchInput');
+    if (!input) return; // input not on the page
+    var q = input.value.trim().toLowerCase();
+
+    var cards = document.querySelectorAll('.course-card');
+    var anyVisible = false;
+
+    cards.forEach(function(card) {
+      var title = (card.querySelector('.course-title')?.textContent || '').toLowerCase();
+      var desc  = (card.querySelector('.course-desc')?.textContent  || '').toLowerCase();
+
+      var match = !q || title.includes(q) || desc.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) anyVisible = true;
+    });
+
+    // Optional: show a “no results” message if you add this element
+    var noResults = document.getElementById('noResults');
+    if (noResults) noResults.style.display = anyVisible ? 'none' : 'block';
+  }
+
+  // Run once after the DOM loads (so it works even without typing)
+  document.addEventListener('DOMContentLoaded', filterCourses);
+
+  function showNotification(message) {
+    let container = document.getElementById("notificationContainer");
+
+    // Create notification element
+    let notif = document.createElement("div");
+    notif.className = "notification";
+    notif.innerHTML = `
+      <span>${message}</span>
+      <span class="close-btn" onclick="closeNotification(this)">×</span>
+    `;
+
+    container.appendChild(notif);
+
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+      if (notif) {
+        notif.style.opacity = "0";
+        setTimeout(() => notif.remove(), 500);
+      }
+    }, 5000);
+  }
+
+  function closeNotification(btn) {
+    let notif = btn.parentElement;
+    notif.style.opacity = "0";
+    setTimeout(() => notif.remove(), 500);
+  }
+
+  function openMenu() {
+      document.getElementById("sideMenu").style.width = "250px";
+    }
+
+    function closeMenu() {
+      document.getElementById("sideMenu").style.width = "0";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignments - Learning Platform</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .assignment-section {
+      background: #fff;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      max-width: 800px;
+    }
+
+    .assignment-section h2 {
+      margin-bottom: 10px;
+      color: #4CAF50;
+    }
+
+    .assignment-section ol {
+      padding-left: 20px;
+    }
+
+    .assignment-section li {
+      margin: 8px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .submit-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      margin-top: 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .submit-btn:hover {
+      background: #45a049;
+    }
+
+    /* Popup Form */
+    .form-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 2px solid #4CAF50;
+      border-radius: 10px;
+      z-index: 9999;
+      background-color: #fff;
+      padding: 20px;
+      width: 400px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .form-popup h3 {
+      margin-top: 0;
+      color: #4CAF50;
+    }
+
+    .form-popup input, 
+    .form-popup textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .form-popup button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .form-popup .submit {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .form-popup .cancel {
+      background: #f44336;
+      color: white;
+    }
+    .menu-btn {
+      font-size: 22px;
+      cursor: pointer;
+      background: #4CAF50;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 26px;
+      margin: 10px;
+      display: inline-block;
+    }
+
+    /* Side Menu */
+    .side-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+      z-index: 1200;
+    }
+
+    .side-menu a {
+      padding: 12px 24px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #f1f1f1;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .side-menu a:hover {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .side-menu .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 32px;
+      cursor: pointer;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Assignments</h1>
+  <span class="menu-btn" onclick="openMenu()">☰</span>
+
+  <!-- Side Menu -->
+  <div id="sideMenu" class="side-menu">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">×</a>
+    <a href="project.html">🏠 Home</a>
+    <a href="my_course.html">📚 Courses</a>
+    <a href="menu.html">📝 Assignments</a>
+    <a href="#">🎓 Certificates</a>
+    <a href="setting.html">⚙️ Settings</a>
+  </div>
+
+  <!-- Web Development Assignment -->
+  <div class="assignment-section">
+    <h2>🌐 Web Development</h2>
+    <ol>
+      <li>Create a simple **login page** using HTML & CSS.</li>
+      <li>Explain the difference between **inline, internal, and external CSS** with examples.</li>
+      <li>Build a **responsive navbar** using Flexbox or Grid.</li>
+    </ol>
+    <button class="submit-btn" onclick="openForm('Web Development')">Submit Assignment</button>
+  </div>
+
+  <!-- Data Science Assignment -->
+  <div class="assignment-section">
+    <h2>📊 Data Science</h2>
+    <ol>
+      <li>Write Python code to **clean a dataset** by handling missing values.</li>
+      <li>Explain the difference between **Supervised and Unsupervised Learning** with examples.</li>
+      <li>Implement a **Decision Tree Classifier** using scikit-learn.</li>
+    </ol>
+    <button class="submit-btn" onclick="openForm('Data Science')">Submit Assignment</button>
+  </div>
+
+  <!-- Cyber Security Assignment -->
+  <div class="assignment-section">
+    <h2>🔒 Cyber Security</h2>
+    <ol>
+      <li>What is **Phishing**? Provide 3 real-world examples.</li>
+      <li>Write a short note on **Encryption vs Hashing**.</li>
+      <li>Create a **strong password policy** for a company.</li>
+    </ol>
+    <button class="submit-btn" onclick="openForm('Cyber Security')">Submit Assignment</button>
+  </div>
+
+  <!-- Artificial Intelligence Assignment -->
+  <div class="assignment-section">
+    <h2>🤖 Artificial Intelligence</h2>
+    <ol>
+      <li>What is the difference between **AI, ML, and Deep Learning**?</li>
+      <li>Write a simple **Python program** to train a linear regression model.</li>
+      <li>Explain how **Neural Networks** mimic the human brain.</li>
+    </ol>
+    <button class="submit-btn" onclick="openForm('Artificial Intelligence')">Submit Assignment</button>
+  </div>
+
+  <!-- Popup Form -->
+  <div class="form-popup" id="assignmentForm">
+    <h3 id="formTitle">Submit Assignment</h3>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Write your answer or notes..." rows="4"></textarea>
+      <input type="file" accept=".pdf,.doc,.docx,.zip,.py,.ipynb">
+      <button type="submit" class="submit">Submit</button>
+      <button type="button" class="cancel" onclick="closeForm()">Cancel</button>
+    </form>
+  </div>
+
+  <script>
+    function openForm(subject) {
+      document.getElementById("assignmentForm").style.display = "block";
+      document.getElementById("formTitle").innerText = "Submit Assignment - " + subject;
+    }
+
+    function closeForm() {
+      document.getElementById("assignmentForm").style.display = "none";
+    }
+
+    function openMenu() {
+      document.getElementById("sideMenu").style.width = "250px";
+    }
+
+    function closeMenu() {
+      document.getElementById("sideMenu").style.width = "0";
+    }
+  </script>
+
+</body>
+</html>

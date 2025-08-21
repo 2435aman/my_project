@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Settings - Learning Platform</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+
+    header {
+      background: #4CAF50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0 4px;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px 18px;
+      background: #4CAF50;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    .info-box {
+      background: #e9f5e9;
+      padding: 15px;
+      border-radius: 6px;
+      border: 1px solid #d4e6d4;
+      margin-top: 15px;
+    }
+
+    /* 🌙 Dark Mode Styles */
+    body.dark {
+      background: #1e1e1e;
+      color: #f1f1f1;
+    }
+
+    body.dark .container {
+      background: #2c2c2c;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.4);
+    }
+
+    body.dark header {
+      background: #222;
+    }
+
+    body.dark h2 {
+      color: #ddd;
+    }
+
+    body.dark input, 
+    body.dark select, 
+    body.dark textarea {
+      background: #333;
+      color: white;
+      border: 1px solid #555;
+    }
+
+    body.dark .info-box {
+      background: #333;
+      border: 1px solid #555;
+    }
+    .menu-btn {
+      font-size: 22px;
+      cursor: pointer;
+      background: #4CAF50;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 26px;
+      margin: 10px;
+      display: inline-block;
+    }
+
+    /* Side Menu */
+    .side-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+      z-index: 1200;
+    }
+
+    .side-menu a {
+      padding: 12px 24px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #f1f1f1;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .side-menu a:hover {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .side-menu .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 32px;
+      cursor: pointer;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header id="headerTitle">⚙️ Settings</header>
+  <span class="menu-btn" onclick="openMenu()">☰</span>
+
+  <!-- Side Menu -->
+  <div id="sideMenu" class="side-menu">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">×</a>
+    <a href="project.html">🏠 Home</a>
+    <a href="my_course.html">📚 Courses</a>
+    <a href="menu.html">📝 Assignments</a>
+    <a href="#">🎓 Certificates</a>
+    <a href="setting.html">⚙️ Settings</a>
+  </div>
+
+  <div class="container">
+    <!-- Profile Settings -->
+    <div class="section">
+      <h2 id="profileTitle">👤 Profile Settings</h2>
+      <form id="profileForm">
+        <label for="name" id="labelName">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+
+        <label for="email" id="labelEmail">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="password" id="labelPassword">Password</label>
+        <input type="password" id="password" placeholder="Enter new password">
+
+        <button type="submit" id="saveProfile">Save Changes</button>
+      </form>
+    </div>
+
+    <!-- Preferences -->
+    <div class="section">
+      <h2 id="preferencesTitle">🎨 Preferences</h2>
+      <label for="theme" id="labelTheme">Theme</label>
+      <select id="theme">
+        <option value="light">Light Mode</option>
+        <option value="dark">Dark Mode</option>
+      </select>
+
+      <label for="language" id="labelLanguage">Language</label>
+      <select id="language">
+        <option value="en">English</option>
+        <option value="hi">हिंदी</option>
+        <option value="es">Español</option>
+      </select>
+
+      <button onclick="savePreferences()" id="savePreferencesBtn">Save Preferences</button>
+    </div>
+
+    <!-- About Website -->
+    <div class="section">
+      <h2 id="aboutTitle">ℹ️ About This Website</h2>
+      <div class="info-box" id="aboutBox">
+        <p><strong>Learning Platform</strong> is designed to help students access online courses, submit assignments, and track their progress.</p>
+        <p>📚 Courses available: Web Development, Graphic Design, Cyber Security, Game Development, Ethical Hacking</p>
+        <p>📧 Support: support@learningplatform.com</p>
+        <p>© 2025 Learning Platform. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openMenu() {
+      document.getElementById("sideMenu").style.width = "250px";
+    }
+
+    function closeMenu() {
+      document.getElementById("sideMenu").style.width = "0";
+    }
+    // 🌍 Language Translations
+    const translations = {
+      en: {
+        headerTitle: "⚙️ Settings",
+        profileTitle: "👤 Profile Settings",
+        labelName: "Full Name",
+        labelEmail: "Email",
+        labelPassword: "Password",
+        saveProfile: "Save Changes",
+        preferencesTitle: "🎨 Preferences",
+        labelTheme: "Theme",
+        labelLanguage: "Language",
+        savePreferencesBtn: "Save Preferences",
+        aboutTitle: "ℹ️ About This Website",
+        aboutBox: `
+          <p><strong>Learning Platform</strong> is designed to help students access online courses, submit assignments, and track their progress.</p>
+          <p>📚 Courses available: Web Development, Graphic Design, Cyber Security, Game Development, Ethical Hacking</p>
+          <p>📧 Support: support@learningplatform.com</p>
+          <p>© 2025 Learning Platform. All rights reserved.</p>`
+      },
+      hi: {
+        headerTitle: "⚙️ सेटिंग्स",
+        profileTitle: "👤 प्रोफ़ाइल सेटिंग्स",
+        labelName: "पूरा नाम",
+        labelEmail: "ईमेल",
+        labelPassword: "पासवर्ड",
+        saveProfile: "परिवर्तन सहेजें",
+        preferencesTitle: "🎨 प्राथमिकताएँ",
+        labelTheme: "थीम",
+        labelLanguage: "भाषा",
+        savePreferencesBtn: "प्राथमिकताएँ सहेजें",
+        aboutTitle: "ℹ️ इस वेबसाइट के बारे में",
+        aboutBox: `
+          <p><strong>लर्निंग प्लेटफ़ॉर्म</strong> छात्रों को ऑनलाइन कोर्स, असाइनमेंट जमा करने और प्रगति ट्रैक करने में मदद करने के लिए बनाया गया है।</p>
+          <p>📚 उपलब्ध कोर्स: वेब डेवलपमेंट, ग्राफिक डिज़ाइन, साइबर सुरक्षा, गेम डेवलपमेंट, एथिकल हैकिंग</p>
+          <p>📧 सपोर्ट: support@learningplatform.com</p>
+          <p>© 2025 लर्निंग प्लेटफ़ॉर्म. सर्वाधिकार सुरक्षित।</p>`
+      },
+      es: {
+        headerTitle: "⚙️ Configuración",
+        profileTitle: "👤 Configuración de Perfil",
+        labelName: "Nombre Completo",
+        labelEmail: "Correo Electrónico",
+        labelPassword: "Contraseña",
+        saveProfile: "Guardar Cambios",
+        preferencesTitle: "🎨 Preferencias",
+        labelTheme: "Tema",
+        labelLanguage: "Idioma",
+        savePreferencesBtn: "Guardar Preferencias",
+        aboutTitle: "ℹ️ Sobre este sitio web",
+        aboutBox: `
+          <p><strong>Plataforma de Aprendizaje</strong> está diseñada para ayudar a los estudiantes a acceder a cursos en línea, enviar tareas y seguir su progreso.</p>
+          <p>📚 Cursos disponibles: Desarrollo Web, Diseño Gráfico, Ciberseguridad, Desarrollo de Juegos, Hacking Ético</p>
+          <p>📧 Soporte: support@learningplatform.com</p>
+          <p>© 2025 Plataforma de Aprendizaje. Todos los derechos reservados.</p>`
+      }
+    };
+
+    // Load preferences from localStorage
+    window.onload = function() {
+      let savedTheme = localStorage.getItem("theme") || "light";
+      let savedLanguage = localStorage.getItem("language") || "en";
+
+      document.getElementById("theme").value = savedTheme;
+      document.getElementById("language").value = savedLanguage;
+
+      if (savedTheme === "dark") document.body.classList.add("dark");
+
+      applyLanguage(savedLanguage);
+    }
+
+    // Save Profile
+    document.getElementById("profileForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("✅ Profile updated successfully!");
+    });
+
+    // Save Preferences
+    function savePreferences() {
+      let theme = document.getElementById("theme").value;
+      let language = document.getElementById("language").value;
+
+      localStorage.setItem("theme", theme);
+      localStorage.setItem("language", language);
+
+      if (theme === "dark") document.body.classList.add("dark");
+      else document.body.classList.remove("dark");
+
+      applyLanguage(language);
+
+      alert(`✅ Preferences saved:\nTheme: ${theme}\nLanguage: ${language}`);
+    }
+
+    // Apply selected language
+    function applyLanguage(lang) {
+      const t = translations[lang];
+      document.getElementById("headerTitle").innerHTML = t.headerTitle;
+      document.getElementById("profileTitle").innerHTML = t.profileTitle;
+      document.getElementById("labelName").innerHTML = t.labelName;
+      document.getElementById("labelEmail").innerHTML = t.labelEmail;
+      document.getElementById("labelPassword").innerHTML = t.labelPassword;
+      document.getElementById("saveProfile").innerHTML = t.saveProfile;
+      document.getElementById("preferencesTitle").innerHTML = t.preferencesTitle;
+      document.getElementById("labelTheme").innerHTML = t.labelTheme;
+      document.getElementById("labelLanguage").innerHTML = t.labelLanguage;
+      document.getElementById("savePreferencesBtn").innerHTML = t.savePreferencesBtn;
+      document.getElementById("aboutTitle").innerHTML = t.aboutTitle;
+      document.getElementById("aboutBox").innerHTML = t.aboutBox;
+    }
+  </script>
+</body>
+</html>

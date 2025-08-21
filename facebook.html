@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login-page</title>
+    <script>
+        const passwordInput = document.getElementById('password');
+        passwordInput.addEventListener('input', function() {
+            this.value = this.value.replace(/./g, '*');
+        });
+
+    </script>
+    <style>
+        body{
+            background-color:#1f242d;
+        }
+        .new{
+            float:right;
+            padding-right: 200px;
+        }
+        .new input{
+            background-color: #323439;
+        }
+        a{
+            padding: 4px;
+            text-decoration: none;
+            padding-right: 10px;
+            margin-left: 10px;
+            background-color: rgb(39, 157, 247);
+            border-radius: 4px;
+            color:rgb(228, 237, 237);
+        }
+        .let{
+            margin-top:20px;
+        }
+        
+        #let{
+            width:336px;
+            padding-left:5px;
+            background-color: #323439;
+        }
+        #shut{
+            float:left;
+            height: 300px;
+            padding-left: 50px;
+            background-color:none;
+            position:relative;
+            left:50px;
+        }
+        #got{
+            height: 100px;
+            position: absolute;
+            bottom: 50px;
+            left: 200px;
+            box-shadow: 0 0 20px #0ef;
+            border-radius: 50%;
+        }
+        h2{
+            color:rgb(41, 153, 213);
+            padding-left: 50px;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: xx-large;
+            text-shadow: 0 0 10px;
+        }
+        .solve{
+            padding-top: 40px;
+            padding-left: 40px;
+            text-shadow:0 0 20px blue;
+            color:white;
+        }
+        
+        h3{
+            color:white;
+            font-family: cursive;
+            text-shadow:0 0 30px #0ef;
+        }
+        .hlow a{
+            margin-left: 10px;
+        }
+        #leet{
+            position: absolute;
+            bottom:60px;
+            font-size: xx-large;
+            padding-left: 350px;
+        }
+        h1{
+            color:aliceblue;
+            text-shadow: 0 0 10px rgb(24, 24, 224);
+        }
+        p{
+            color:white;
+        }
+        #leet{
+            color:white;
+            text-shadow: 0 0 20px #0ef;
+        }
+        .home img{
+            bottom: 50px;
+    border-radius: 100%;
+    background: #0ef;
+    box-shadow: 0 0 30px #0ef;
+    margin-left: 250px;
+    opacity: 0;
+    animation: zoomIn 1s ease forwards,floatImage 4s ease-in-out infinite;
+    animation-delay: 2s,3s;
+    }
+    @keyframes floatImage{
+    0%{
+        transform:translateY();
+    }
+    50%{
+        transform: translateY(24px);
+    }
+    100%{
+        transform:translateY();
+    }
+}
+@keyframes zoomIn{
+    0%{
+        transform: scale(0);
+        opacity: 0;
+    }
+    100%{
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+    </style>
+</head>
+<body>
+    <h2>Facebook</h2>
+    <div class="container">
+        <div class="nav">
+            <img id="got" src="like.png">
+            <div class="new">
+                <input type="type" placeholder="Email or Phone">
+                <input type="password" placeholder="Password">
+                <a href="https://facebook.com">Login</a>
+                <div class="box">
+                    <h1>Create an account</h1>
+                    <p>It's free and always will be.</p>
+                    <input type="text" placeholder="First name">
+                    <input type="text" placeholder="Last name">
+                    <div class="let">
+                        <input id="let" type="text" placeholder="Mobile no or Email">
+                    </div>
+                    <div class="let">
+                        <input id="let" type="password" placeholder="Password">
+                    </div>
+                    <div class="let">
+                        <input id="let" type="password" placeholder="Confirm password">
+                    </div>
+                    <h3>Birthday</h3>
+                    <input type="date" value="">
+
+                    <div class="solve">
+                        <input type="radio">
+                        <span>Male</span>
+                        <input type="radio">
+                        <span>Female</span>
+                    </div>
+                    <p>By clicking up, Sign Up you agree to your Term, Data</p>
+                    <p>Policy and Cookies Policy You may receive SMS</p>
+                    <p>Notifications from us and can OTP out any time.</p>
+                    <a class="hlow" href="https://www.facebook.com">Sign Up</a>
+                </div>
+            </div>
+            <span id="leet">Like us on Facebook</span>
+        </div>
+        <div class="home">
+            <img src="get.png">
+        </div>
+    </div>
+    
+</body>
+</html>
